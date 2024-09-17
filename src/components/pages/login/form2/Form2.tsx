@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TitleForm from "../../../reusable-ui/TitleForm";
 import { schema } from "./yupSchema";
 import { IFormInputs } from "./typeFormInputs";
@@ -15,9 +15,11 @@ export default function SignUpForm() {
     resolver: yupResolver(schema),
   });
   const { username } = useParams();
+  const navigate  = useNavigate()
 
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
+    navigate('/form3')
   };
 
   return (
