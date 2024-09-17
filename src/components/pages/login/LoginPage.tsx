@@ -1,51 +1,15 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Form1 from "./Form1";
+import Box from "../../reusable-ui/Box";
 
 export default function LoginPage() {
-  const [user, setUser] = useState({
-    name: "",
-    password: "",
-  });
-  const navigate = useNavigate();
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    navigate(`/form2/${user.name}`);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setUser((prevUser) => ({ ...prevUser, [name]: value }));
-  };
   return (
     <LoginPageStyled>
-      <div className="box" />
+      <Box />
       <div className="container">
-        <form onSubmit={handleSubmit}>
-          <h1>Create An Account</h1>
-          <p>
-            Create an account to enjoy all the services without any ads for
-            free!
-          </p>
-          <input
-            name="name"
-            value={user.name}
-            onChange={handleChange}
-            placeholder="Name"
-            required
-          />
-          <input
-            name="password"
-            value={user.password}
-            onChange={handleChange}
-            placeholder="Password"
-            required
-          />
-          <button>Create Account</button>
-        </form>
+        <Form1 />
       </div>
-      <div className="box" />
+      <Box />
     </LoginPageStyled>
   );
 }
@@ -58,6 +22,13 @@ const LoginPageStyled = styled.div`
   height: 100vh;
   overflow: hidden;
 
+  .container {
+    width: 500px;
+    height: 500px;
+    background-color: #f6fbf9;
+    border-radius: 50px;
+    z-index: 3;
+  }
   h1 {
     margin-top: 40px;
     font-size: 40px;
@@ -68,31 +39,12 @@ const LoginPageStyled = styled.div`
     text-align: center;
     margin-bottom: 20px;
   }
-  .container {
-    width: 500px;
-    height: 500px;
-    background-color: #f6fbf9;
-    border-radius: 50px;
-    z-index: 3;
-  }
-  .box{
-    width: 550px;
-    height: 550px;
-    background: #C1E3D6;
-    border-radius: 120px;
-    transform: rotate(45deg);
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
   input {
     padding: 20px;
     width: 350px;
     margin-top: 20px;
     border-radius: 15px;
+    border: 1px solid;
   }
   button {
     margin-top: 30px;
