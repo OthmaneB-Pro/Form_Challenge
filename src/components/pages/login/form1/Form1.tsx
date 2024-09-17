@@ -29,10 +29,7 @@ export default function Form1() {
       <TextForm1 />
       {inputForm.map((input) => (
         <InputValue
-          key={input.name}
-          required={input.required}
-          name={input.name}
-          placeholder={input.placeholder}
+          {...input}
           value={user[input.name as keyof typeof user]}
           onChange={handleChange}
         />
