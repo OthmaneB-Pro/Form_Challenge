@@ -32,6 +32,7 @@ interface IFormInputs {
 
 
 export default function SignUpForm() {
+  
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });

@@ -20,38 +20,58 @@ export default function LoginPage() {
   };
   return (
     <LoginPageStyled>
+      <div className="box" />
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <label>Nom</label>
+          <h1>Create An Account</h1>
+          <p>
+            Create an account to enjoy all the services without any ads for
+            free!
+          </p>
           <input
             name="name"
             value={user.name}
             onChange={handleChange}
-            placeholder="Nom"
+            placeholder="Name"
+            required
           />
-          <label>Mot de passe</label>
           <input
             name="password"
             value={user.password}
             onChange={handleChange}
-            placeholder="mot de passe"
+            placeholder="Password"
+            required
           />
-          <button>Valider</button>
+          <button>Create Account</button>
         </form>
       </div>
+      <div className="box" />
     </LoginPageStyled>
   );
 }
 
 const LoginPageStyled = styled.div`
+  background: #a7d7c5;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 
+  h1 {
+    margin-top: 40px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+  p {
+    width: 350px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
   .container {
-    width: 400px;
-    height: 400px;
-    background-color: green;
+    width: 500px;
+    height: 500px;
+    background-color: #f6fbf9;
+    border-radius: 50px;
   }
   form {
     display: flex;
@@ -60,7 +80,25 @@ const LoginPageStyled = styled.div`
     align-items: center;
   }
   input {
-    padding: 5px;
-    margin-top: 10px;
+    padding: 20px;
+    width: 350px;
+    margin-top: 20px;
+    border-radius: 15px;
+  }
+  button {
+    margin-top: 30px;
+    border-radius: 15px;
+    padding: 20px;
+    width: 300px;
+    background: #84c7ae;
+    color: white;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+
+    &:hover {
+      transform: linear 1s;
+      background: #4eb791;
+    }
   }
 `;
