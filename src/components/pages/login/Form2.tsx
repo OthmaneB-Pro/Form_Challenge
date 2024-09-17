@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import styled from 'styled-components';
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import styled from "styled-components";
 
 const schema = yup.object().shape({
   email: yup
@@ -10,17 +10,17 @@ const schema = yup.object().shape({
     .required("L'e-mail est requis"),
   username: yup
     .string()
-    .min(3, 'Le nom d’utilisateur doit contenir au moins 3 caractères')
-    .max(20, 'Le nom d’utilisateur ne doit pas dépasser 20 caractères')
-    .required('Le nom d’utilisateur est requis'),
+    .min(3, "Le nom d’utilisateur doit contenir au moins 3 caractères")
+    .max(20, "Le nom d’utilisateur ne doit pas dépasser 20 caractères")
+    .required("Le nom d’utilisateur est requis"),
   password: yup
     .string()
-    .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
-    .required('Le mot de passe est requis'),
+    .min(8, "Le mot de passe doit contenir au moins 8 caractères")
+    .required("Le mot de passe est requis"),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password')], 'Les mots de passe doivent correspondre')
-    .required('Veuillez confirmer votre mot de passe'),
+    .oneOf([yup.ref("password")], "Les mots de passe doivent correspondre")
+    .required("Veuillez confirmer votre mot de passe"),
 });
 
 interface IFormInputs {
@@ -30,10 +30,12 @@ interface IFormInputs {
   confirmPassword: string;
 }
 
-
 export default function SignUpForm() {
-  
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<IFormInputs>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
 
@@ -47,7 +49,7 @@ export default function SignUpForm() {
       <input
         id="email"
         type="email"
-        {...register('email')}
+        {...register("email")}
         placeholder="Entrez votre email"
       />
       {errors.email && <p className="error">{errors.email.message}</p>}
@@ -56,7 +58,7 @@ export default function SignUpForm() {
       <input
         id="username"
         type="text"
-        {...register('username')}
+        {...register("username")}
         placeholder="Entrez votre nom d'utilisateur"
       />
       {errors.username && <p className="error">{errors.username.message}</p>}
@@ -65,7 +67,7 @@ export default function SignUpForm() {
       <input
         id="password"
         type="password"
-        {...register('password')}
+        {...register("password")}
         placeholder="Entrez votre mot de passe"
       />
       {errors.password && <p className="error">{errors.password.message}</p>}
@@ -74,15 +76,19 @@ export default function SignUpForm() {
       <input
         id="confirmPassword"
         type="password"
-        {...register('confirmPassword')}
+        {...register("confirmPassword")}
         placeholder="Confirmez votre mot de passe"
       />
-      {errors.confirmPassword && <p className="error">{errors.confirmPassword.message}</p>}
+      {errors.confirmPassword && (
+        <p className="error">{errors.confirmPassword.message}</p>
+      )}
 
-      <button type="submit" disabled={isSubmitting}>S'inscrire</button>
+      <button type="submit" disabled={isSubmitting}>
+        S'inscrire
+      </button>
     </FormStyled>
   );
-};
+}
 
 const FormStyled = styled.form`
   display: flex;

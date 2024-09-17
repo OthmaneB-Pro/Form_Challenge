@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import TitleForm from "../../../reusable-ui/TitleForm";
+import TextForm1 from "./TextForm1";
+import Button from "../../../reusable-ui/Button";
 
 export default function Form1() {
   const [user, setUser] = useState({
@@ -20,10 +23,8 @@ export default function Form1() {
   };
   return (
     <Formulaire1Styled onSubmit={handleSubmit}>
-      <h1>Create An Account</h1>
-      <p>
-        Create an account to enjoy all the services without any ads for free!
-      </p>
+      <TitleForm label="Create An Account" />
+      <TextForm1 />
       <input
         name="name"
         value={user.name}
@@ -38,7 +39,7 @@ export default function Form1() {
         placeholder="Password"
         required
       />
-      <button>Create Account</button>
+      <Button label="Create Account" />
     </Formulaire1Styled>
   );
 }
@@ -48,4 +49,12 @@ const Formulaire1Styled = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  input {
+    padding: 20px;
+    width: 350px;
+    margin-top: 20px;
+    border-radius: 15px;
+    border: 1px solid;
+  }
 `;
