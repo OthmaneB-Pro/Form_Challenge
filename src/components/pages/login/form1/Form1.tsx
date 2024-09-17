@@ -4,6 +4,8 @@ import styled from "styled-components";
 import TitleForm from "../../../reusable-ui/TitleForm";
 import TextForm1 from "./TextForm1";
 import Button from "../../../reusable-ui/Button";
+import { inputForm } from "./inputForm";
+import InputValue from "../../../reusable-ui/InputValue";
 
 export default function Form1() {
   const [user, setUser] = useState({
@@ -25,20 +27,16 @@ export default function Form1() {
     <Formulaire1Styled onSubmit={handleSubmit}>
       <TitleForm label="Create An Account" />
       <TextForm1 />
-      <input
-        name="name"
-        value={user.name}
-        onChange={handleChange}
-        placeholder="Name"
-        required
-      />
-      <input
-        name="password"
-        value={user.password}
-        onChange={handleChange}
-        placeholder="Password"
-        required
-      />
+      {inputForm.map((input) => (
+        <InputValue
+          key={input.name}
+          required={input.required}
+          name={input.name}
+          placeholder={input.placeholder}
+          value={user[input.name as keyof typeof user]}
+          onChange={handleChange}
+        />
+      ))}
       <Button label="Create Account" />
     </Formulaire1Styled>
   );
@@ -49,12 +47,4 @@ const Formulaire1Styled = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  input {
-    padding: 20px;
-    width: 350px;
-    margin-top: 20px;
-    border-radius: 15px;
-    border: 1px solid;
-  }
 `;
