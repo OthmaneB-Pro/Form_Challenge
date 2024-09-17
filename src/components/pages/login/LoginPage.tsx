@@ -56,6 +56,7 @@ const LoginPageStyled = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden;
 
   h1 {
     margin-top: 40px;
@@ -72,6 +73,14 @@ const LoginPageStyled = styled.div`
     height: 500px;
     background-color: #f6fbf9;
     border-radius: 50px;
+    z-index: 3;
+  }
+  .box{
+    width: 550px;
+    height: 550px;
+    background: #C1E3D6;
+    border-radius: 120px;
+    transform: rotate(45deg);
   }
   form {
     display: flex;
@@ -97,7 +106,7 @@ const LoginPageStyled = styled.div`
     font-weight: bold;
 
     &:hover {
-      transform: linear 1s;
+      transition: linear 0.2s;
       background: #4eb791;
     }
   }
