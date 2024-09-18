@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 type ButtonType = {
   label: string;
+  disabled? : boolean;
 };
 
-export default function Button({ label }: ButtonType) {
-  return <ButtonStyled>{label}</ButtonStyled>;
+export default function Button({ label, disabled }: ButtonType) {
+  return <ButtonStyled disabled={disabled}>{label}</ButtonStyled>;
 }
 
 const ButtonStyled = styled.button`

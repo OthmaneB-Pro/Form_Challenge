@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import TitleForm from "../../../reusable-ui/TitleForm";
 import { schema } from "./yupSchema";
 import { IFormInputs } from "./typeFormInputs";
+import InputWithYup from "../../../reusable-ui/InputWithYup";
+import Button from "../../../reusable-ui/Button";
 
 export default function SignUpForm() {
   const {
@@ -15,71 +17,63 @@ export default function SignUpForm() {
     resolver: yupResolver(schema),
   });
   const { username } = useParams();
-  const navigate  = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
-    navigate('/form3')
+    navigate("/form3");
   };
 
   return (
     <FormStyled onSubmit={handleSubmit(onSubmit)}>
       <TitleForm label={`Hey, ${username}`} />
-      <label htmlFor="email">Email</label>
-      <input
-        id="email"
+      <InputWithYup
+        name="email"
         type="email"
-        {...register("email")}
         placeholder="Entrez votre email"
+        register={register}
       />
       {errors.email && <p className="error">{errors.email.message}</p>}
 
-      <label htmlFor="username">Nom d'utilisateur</label>
-      <input
-        id="username"
+      <InputWithYup
+        name="username"
         type="text"
-        {...register("username")}
         placeholder="Entrez votre nom d'utilisateur"
+        register={register}
       />
       {errors.username && <p className="error">{errors.username.message}</p>}
 
-      <label htmlFor="password">Mot de passe</label>
-      <input
-        id="password"
+      <InputWithYup
+        name="password"
         type="password"
-        {...register("password")}
         placeholder="Entrez votre mot de passe"
+        register={register}
       />
       {errors.password && <p className="error">{errors.password.message}</p>}
 
-      <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
-      <input
-        id="confirmPassword"
+      <InputWithYup
+        name="confirmPassword"
         type="password"
-        {...register("confirmPassword")}
         placeholder="Confirmez votre mot de passe"
+        register={register}
       />
       {errors.confirmPassword && (
         <p className="error">{errors.confirmPassword.message}</p>
       )}
 
-      <button type="submit" disabled={isSubmitting}>
-        S'inscrire
-      </button>
+      <Button label="S'inscrire" disabled={isSubmitting} />
     </FormStyled>
   );
 }
 
 const FormStyled = styled.form`
+  background: #b1c5da;
+  padding: 40px;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   max-width: 400px;
   margin: 0 auto;
-
-  label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
 
   input {
     margin-bottom: 15px;
