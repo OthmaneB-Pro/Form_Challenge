@@ -1,5 +1,5 @@
 import { FieldErrors } from "react-hook-form";
-import { IFormInputs } from "./typeFormInputs";
+import { IFormInputs } from "../pages/login/form2/typeFormInputs";
 import styled from "styled-components";
 
 type ErrorTextProps = {

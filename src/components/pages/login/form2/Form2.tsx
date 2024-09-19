@@ -7,7 +7,7 @@ import { schema } from "./yupSchema";
 import { IFormInputs } from "./typeFormInputs";
 import InputWithYup from "../../../reusable-ui/InputWithYup";
 import Button from "../../../reusable-ui/Button";
-import ErrorText from "./ErrorText";
+import ErrorText from "../../../reusable-ui/ErrorText";
 
 export default function SignUpForm() {
   const {
