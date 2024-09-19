@@ -7,6 +7,7 @@ import { schema } from "./yupSchema";
 import { IFormInputs } from "./typeFormInputs";
 import InputWithYup from "../../../reusable-ui/InputWithYup";
 import Button from "../../../reusable-ui/Button";
+import ErrorText from "./ErrorText";
 
 export default function SignUpForm() {
   const {
@@ -34,7 +35,7 @@ export default function SignUpForm() {
           placeholder="Entrez votre email"
           register={register}
         />
-        {errors.email && <p className="error">{errors.email.message}</p>}
+        {errors.email && <ErrorText errors={errors} fieldName="email" />}
 
         <InputWithYup
           name="username"
@@ -42,7 +43,7 @@ export default function SignUpForm() {
           placeholder="Entrez votre nom d'utilisateur"
           register={register}
         />
-        {errors.username && <p className="error">{errors.username.message}</p>}
+        {errors.username && <ErrorText errors={errors} fieldName="username" />}
 
         <InputWithYup
           name="password"
@@ -50,7 +51,7 @@ export default function SignUpForm() {
           placeholder="Entrez votre mot de passe"
           register={register}
         />
-        {errors.password && <p className="error">{errors.password.message}</p>}
+        {errors.password && <ErrorText errors={errors} fieldName="password" />}
 
         <InputWithYup
           name="confirmPassword"
@@ -59,7 +60,7 @@ export default function SignUpForm() {
           register={register}
         />
         {errors.confirmPassword && (
-          <p className="error">{errors.confirmPassword.message}</p>
+          <ErrorText errors={errors} fieldName="confirmPassword" />
         )}
 
         <Button label="S'inscrire" disabled={isSubmitting} />
@@ -69,7 +70,7 @@ export default function SignUpForm() {
 }
 
 const FormStyled = styled.form`
-  background: #6BCB77;
+  background: #6bcb77;
   padding: 25px;
   border-radius: 15px;
   display: flex;
@@ -77,12 +78,8 @@ const FormStyled = styled.form`
   max-width: 400px;
   margin: 0 auto;
 
-  .error {
-    color: red;
-    font-size: 14px;
-  }
   button {
-    background: #04AA6D;
+    background: #04aa6d;
     border: 1px solid;
     width: 350px;
 
@@ -96,6 +93,6 @@ const FormContainerStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2D6A4F;
+  background: #2d6a4f;
   height: 100vh;
 `;
