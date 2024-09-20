@@ -26,7 +26,7 @@ export default function ArticlePage() {
     setArticle((prevArticle) => ({ ...prevArticle, [name]: value }));
   };
 
-  const handleDelete = (ArticleId : any) => {
+  const handleDelete = (ArticleId : string) => {
     const deleteArticle = myArticle.filter((already) => ArticleId !== already.id)
     setMyArticle(deleteArticle)
   }
