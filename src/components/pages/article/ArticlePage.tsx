@@ -1,20 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
-type ArticleType = {
-  id: string;
-  title: string;
-  image: string;
-  description: string;
-};
-
-const EmptyArticle = {
-  id: "",
-  title: "",
-  image: "",
-  description: "",
-};
+import { ArticleType } from "./typeArticle";
+import { EmptyArticle } from "./EmptyArticle";
 
 export default function ArticlePage() {
   const { username } = useParams<{ username: string }>();
