@@ -18,73 +18,77 @@ const EmptyArticle = {
 
 export default function ArticlePage() {
   const { username } = useParams<{ username: string }>();
-  const [onForm, setOnForm] = useState(false);
-  const [myArticle, setMyArticle] = useState<ArticleType[]>([]);
-  const [article, setArticle] = useState<ArticleType>(EmptyArticle);
+  const [isEditing, setIsEditing] = useState(false);  
+  const [myArticles, setMyArticles] = useState<ArticleType[]>([]);
+  const [currentArticle, setCurrentArticle] = useState<ArticleType>(EmptyArticle);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setArticle((prevArticle) => ({ ...prevArticle, [name]: value }));
+    setCurrentArticle((prevArticle) => ({ ...prevArticle, [name]: value }));
   };
 
   const handleDelete = (articleId: string) => {
-    const updatedArticles = myArticle.filter((article) => articleId !== article.id);
-    setMyArticle(updatedArticles);
+    setMyArticles((prevArticles) => prevArticles.filter(article => article.id !== articleId));
+  };
+
+  const handleEdit = (articleId: string) => {
+    const articleToEdit = myArticles.find(article => article.id === articleId);
+    if (articleToEdit) {
+      setCurrentArticle(articleToEdit);
+      setIsEditing(true);
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const { id, ...articleWithoutId } = article;
+    if (isEditing) {
+      setMyArticles((prevArticles) =>
+        prevArticles.map((item) => (item.id === currentArticle.id ? currentArticle : item))
+      );
+      setIsEditing(false);  
+    } else {
+      const newArticle = { ...currentArticle, id: crypto.randomUUID() };
+      setMyArticles((prevArticles) => [...prevArticles, newArticle]);
+    }
 
-    const newProductToAdd = {
-      id: crypto.randomUUID(),
-      ...articleWithoutId,
-    };
-
-    setMyArticle((prevArticles) => [...prevArticles, newProductToAdd]);
-
-    setArticle(EmptyArticle);
+    setCurrentArticle(EmptyArticle);  
   };
 
   return (
     <Container>
       <Header>Vos Articles, {username}</Header>
-      <ToggleButton onClick={() => setOnForm(!onForm)}>
-        {onForm ? "Annuler l'ajout" : "Ajouter un article"}
-      </ToggleButton>
 
-      {onForm && (
-        <Form onSubmit={handleSubmit}>
-          <Input
-            name="title"
-            value={article.title}
-            onChange={handleChange}
-            placeholder="Write a title"
-          />
-          <Input
-            name="image"
-            value={article.image}
-            onChange={handleChange}
-            placeholder="Image URL"
-          />
-          <Input
-            name="description"
-            value={article.description}
-            onChange={handleChange}
-            placeholder="Write a description"
-          />
-          <SubmitButton>Submit</SubmitButton>
-        </Form>
-      )}
+      <Form onSubmit={handleSubmit}>
+        <Input
+          name="title"
+          value={currentArticle.title}
+          onChange={handleChange}
+          placeholder="Titre de l'article"
+        />
+        <Input
+          name="image"
+          value={currentArticle.image}
+          onChange={handleChange}
+          placeholder="URL de l'image"
+        />
+        <Input
+          name="description"
+          value={currentArticle.description}
+          onChange={handleChange}
+          placeholder="Description de l'article"
+        />
+        <SubmitButton>{isEditing ? "Mettre à jour" : "Ajouter"}</SubmitButton>
+      </Form>
 
       <ArticlesContainer>
-        {myArticle.map((article) => (
+        {myArticles.map((article) => (
           <ArticleCard key={article.id}>
             <ArticleTitle>{article.title}</ArticleTitle>
             <ArticleImage src={article.image} alt={article.title} />
             <ArticleDescription>{article.description}</ArticleDescription>
-            <DeleteButton onClick={() => handleDelete(article.id)}>Delete</DeleteButton>
+            <DeleteButton onClick={() => handleDelete(article.id)}>Supprimer</DeleteButton>
+            <EditButton onClick={() => handleEdit(article.id)}>Modifier</EditButton>
           </ArticleCard>
         ))}
       </ArticlesContainer>
@@ -92,7 +96,6 @@ export default function ArticlePage() {
   );
 }
 
-// Styled Components
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
@@ -104,23 +107,6 @@ const Header = styled.h1`
   text-align: center;
   color: #333;
   margin-bottom: 20px;
-`;
-
-const ToggleButton = styled.button`
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #0056b3;
-  }
 `;
 
 const Form = styled.form`
@@ -202,5 +188,20 @@ const DeleteButton = styled.button`
 
   &:hover {
     background-color: #c82333;
+  }
+`;
+
+const EditButton = styled.button`
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
   }
 `;
