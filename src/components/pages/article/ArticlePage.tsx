@@ -1,14 +1,17 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { ArticleType } from "./typeArticle";
-import { EmptyArticle } from "./EmptyArticle";
+import { ArticleType } from "./articleComponents/typeArticle";
+import { EmptyArticle } from "./articleComponents/EmptyArticle";
+import TitleForm from "../../reusable-ui/TitleForm";
+import SubmitButton from "./articleComponents/SubmitButton";
 
 export default function ArticlePage() {
   const { username } = useParams<{ username: string }>();
-  const [isEditing, setIsEditing] = useState(false);  
+  const [isEditing, setIsEditing] = useState(false);
   const [myArticles, setMyArticles] = useState<ArticleType[]>([]);
-  const [currentArticle, setCurrentArticle] = useState<ArticleType>(EmptyArticle);
+  const [currentArticle, setCurrentArticle] =
+    useState<ArticleType>(EmptyArticle);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -16,11 +19,15 @@ export default function ArticlePage() {
   };
 
   const handleDelete = (articleId: string) => {
-    setMyArticles((prevArticles) => prevArticles.filter(article => article.id !== articleId));
+    setMyArticles((prevArticles) =>
+      prevArticles.filter((article) => article.id !== articleId)
+    );
   };
 
   const handleEdit = (articleId: string) => {
-    const articleToEdit = myArticles.find(article => article.id === articleId);
+    const articleToEdit = myArticles.find(
+      (article) => article.id === articleId
+    );
     if (articleToEdit) {
       setCurrentArticle(articleToEdit);
       setIsEditing(true);
@@ -32,21 +39,22 @@ export default function ArticlePage() {
 
     if (isEditing) {
       setMyArticles((prevArticles) =>
-        prevArticles.map((item) => (item.id === currentArticle.id ? currentArticle : item))
+        prevArticles.map((item) =>
+          item.id === currentArticle.id ? currentArticle : item
+        )
       );
-      setIsEditing(false);  
+      setIsEditing(false);
     } else {
       const newArticle = { ...currentArticle, id: crypto.randomUUID() };
       setMyArticles((prevArticles) => [...prevArticles, newArticle]);
     }
 
-    setCurrentArticle(EmptyArticle);  
+    setCurrentArticle(EmptyArticle);
   };
 
   return (
     <Container>
-      <Header>Vos Articles, {username}</Header>
-
+      <TitleForm label={`Vos Articles, ${username}`} />
       <Form onSubmit={handleSubmit}>
         <Input
           name="title"
@@ -66,7 +74,7 @@ export default function ArticlePage() {
           onChange={handleChange}
           placeholder="Description de l'article"
         />
-        <SubmitButton>{isEditing ? "Mettre à jour" : "Ajouter"}</SubmitButton>
+        <SubmitButton label={isEditing ? "Mettre à jour" : "Ajouter"} />
       </Form>
 
       <ArticlesContainer>
@@ -75,8 +83,12 @@ export default function ArticlePage() {
             <ArticleTitle>{article.title}</ArticleTitle>
             <ArticleImage src={article.image} alt={article.title} />
             <ArticleDescription>{article.description}</ArticleDescription>
-            <DeleteButton onClick={() => handleDelete(article.id)}>Supprimer</DeleteButton>
-            <EditButton onClick={() => handleEdit(article.id)}>Modifier</EditButton>
+            <DeleteButton onClick={() => handleDelete(article.id)}>
+              Supprimer
+            </DeleteButton>
+            <EditButton onClick={() => handleEdit(article.id)}>
+              Modifier
+            </EditButton>
           </ArticleCard>
         ))}
       </ArticlesContainer>
@@ -89,12 +101,6 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
-`;
-
-const Header = styled.h1`
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
@@ -114,21 +120,6 @@ const Input = styled.input`
 
   &:focus {
     border-color: #007bff;
-  }
-`;
-
-const SubmitButton = styled.button`
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #218838;
   }
 `;
 
