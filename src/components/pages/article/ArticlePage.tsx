@@ -5,6 +5,7 @@ import { ArticleType } from "./articleComponents/typeArticle";
 import { EmptyArticle } from "./articleComponents/EmptyArticle";
 import TitleForm from "../../reusable-ui/TitleForm";
 import SubmitButton from "./articleComponents/SubmitButton";
+import { inputValue } from "./articleComponents/inputValue";
 
 export default function ArticlePage() {
   const { username } = useParams<{ username: string }>();
@@ -56,24 +57,10 @@ export default function ArticlePage() {
     <Container>
       <TitleForm label={`Vos Articles, ${username}`} />
       <Form onSubmit={handleSubmit}>
-        <Input
-          name="title"
-          value={currentArticle.title}
-          onChange={handleChange}
-          placeholder="Titre de l'article"
-        />
-        <Input
-          name="image"
-          value={currentArticle.image}
-          onChange={handleChange}
-          placeholder="URL de l'image"
-        />
-        <Input
-          name="description"
-          value={currentArticle.description}
-          onChange={handleChange}
-          placeholder="Description de l'article"
-        />
+
+      {inputValue.map((inputV) => (
+        <Input key={inputV.name}  name={inputV.name} onChange={handleChange} placeholder={inputV.placeholder} value={currentArticle[inputV.name]} />
+      ))}
         <SubmitButton label={isEditing ? "Mettre à jour" : "Ajouter"} />
       </Form>
 

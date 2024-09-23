@@ -3,4 +3,5 @@ export type ArticleType = {
     title: string;
     image: string;
     description: string;
+    [key: string]: any;
   };
