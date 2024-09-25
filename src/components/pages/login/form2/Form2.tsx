@@ -22,7 +22,7 @@ export default function SignUpForm() {
 
   const onSubmit = (data: IFormInputs) => {
     console.log(data);
-    navigate("/form3");
+    navigate(`/article/${username}`);
   };
 
   return (
